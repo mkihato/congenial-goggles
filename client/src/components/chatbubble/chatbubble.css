@@ -1,0 +1,31 @@
+.chat-bubble {
+    max-width: 60%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    position: relative;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .chat-bubble.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+  
+  .chat-bubble.received {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    align-self: flex-start;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
