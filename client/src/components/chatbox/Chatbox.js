@@ -2,52 +2,71 @@ import React, { useState } from 'react';
 // import io from "socket.io-client";
 import './chatbox.css';
 import ChatBubble from '../chatbubble/Chatbubble';
+import axios from 'axios';
 
 
 // const socket= io.connect("http://localhost:3001");
 
 
-const ChatBox = () => {
-  const [message, setMessage] = useState('');
-  // const [messageReceived,setmessageReceived]= useState('')
+const ChatBox = ({setnewMessage}) => {
+  
+  const [sendMessage, setsendMessage] = useState('');
+
   const [messages, setMessages] = useState([
     { text: 'Hello! How are you?', isSent: false },
     { text: 'I am good, thank you!', isSent: true },
   ]);
-
+  // setMessages({text: setnewMessage, isSent:true})
   
 
-  const handleSendMessage = () => {
-    // Handle sending message
-    // socket.emit("Message sent: ", message);
-    // console.log(socket)
-  
-    if (message.trim()) {
-      setMessages([...messages, { text: message, isSent: true }]);
-      setMessage('');
+  const handleInputChange = (e) => {
+    setsendMessage(e.target.value);
+    
+  };
+
+  const handleSendMessage = async() => {
+    
+
+    try {
+      await axios.post('http://localhost:3005/sendMessage',{sendMessage});
+      setsendMessage('')
+      setMessages([...messages, { text: sendMessage, isSent: true }]);
+
+    } catch (error) {
+      console.error('Error sending message:', error);
     }
+
+     
     
-    // useEffect(()=>{
-    //   socket.on("recieve message",(data)=>{
-    //     setmessageReceived(data.message)
-    //   })
-    // },[socket])
+    // if (message.trim()) {
+    //   setMessages([...messages, { text: message, isSent: true }]);
+    //   setMessage('');
+    // }
     
+    
+    
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
   };
 
   return (
     <div className="chat-box">
       <div className="messages">
-      {messages.map((msg, index) => (
-          <ChatBubble key={index} message={msg.text} isSent={msg.isSent} />
-        ))}
+      <ChatBubble message={setnewMessage} isSent={false} />
+      {/* {messages.map((msg, index) => (
+          
+        ))} */}
       </div>
       <div className="input-container">
         <input
           type="text"
           placeholder="Type a message..."
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyPress}
+          value={sendMessage}
+          onChange={handleInputChange}
           className="message-input"
         />
         <button onClick={handleSendMessage} className="send-button">Send</button>

@@ -13,37 +13,82 @@ const Multimessages=()=>{
     const [messages, setMessages] = useState([]);
 
 
-    useEffect(() => {
-        // Fetch Gmail messages when the component mounts
+    // useEffect(() => {
+    //     // Fetch Gmail messages when the component mounts
 
-        axios.get('http://localhost:3003/api/mail/list/marvin@telvoip.io/messages/')
-          .then((response) => {
-            setMessages(response.data.messages);
-            // const mailIds= response.data.messages
-            // const x =mailIds.forEach((element) => {
-            //   return axios.get(`http://localhost:3003/api/mail/list/marvin@telvoip.io/messages/${element.id}`).then((res)=>{
-            //     setMessages (res.data)
+    //     axios.get('http://localhost:3005/api/mail/list/marvin@telvoip.io/messages/')
+    //       .then((response) => {
+    //         setMessages(response.data.messages);
+    //         const mailIds= response.data.messages
+    //         const x =mailIds.map((element) => {
+    //           return axios.get(`http://localhost:3005/api/mail/list/marvin@telvoip.io/messages/${element.id}`).then((res)=>{
+    //             console.log(res.data)
                 
-            //   })
-            // });
-            // console.log(x)
+    //           })
+    //         });
+    //         console.log(x)
              
           
-          })
-          .catch((error) => {
-            console.error('Error fetching Gmail messages:', error);
-          });
-      }, []);
-    
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error fetching Gmail messages:', error);
+    //       });
+    //   }, []);
+    const [messageDetails, setMessageDetails] = useState([]);
+    const [selectedMessage, setSelectedMessage] = useState('');
+
+    const handleDataFromChild = (data) => {
+      setSelectedMessage(data);
+      console.log(data)
+    };
+  
+
+  useEffect(() => {
+    axios.get('http://localhost:3005/api/mail/list/marvin@telvoip.io/messages/')
+      .then((response) => {
+        setMessages(response.data.messages);
+        
+        const mailIds = response.data.messages;
+
+        const detailPromises = mailIds.map((element) => {
+          return axios.get(`http://localhost:3005/api/mail/list/marvin@telvoip.io/messages/${element.id}`)
+            .then((res) => {
+              
+              const headers = res.data.payload.headers;
+              const fromHeader = headers.find(header => header.name === 'From');
+              return {
+                snippet: res.data.snippet,
+                from: fromHeader ? fromHeader.value : 'Unknown'
+              };
+            });
+        });
+
+        Promise.all(detailPromises).then((details) => {
+          setMessageDetails(details);
+        }).catch((error) => {
+          console.error('Error fetching message details:', error);
+        });
+
+      })
+      .catch((error) => {
+        console.error('Error fetching Gmail messages:', error);
+      });
+  }, []);
       
     
     return(
         <div className='main-content'>
         <div className="section left-section">
-          <MessageBox messages={messages}/>
+          <MessageBox messages={messageDetails} onDataFromChild={handleDataFromChild}/>
+          {/* {messageDetails.map((message, index) => (
+          <li key={index}>
+            <p>From: {message.from}</p>
+            <p>Snippet: {message.snippet}</p>
+          </li>
+        ))} */}
         </div>
         <div className="section right-section">
-          <ChatBox/>
+          <ChatBox setnewMessage={selectedMessage}/>
         </div>
         </div>
     )

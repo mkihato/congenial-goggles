@@ -26,7 +26,7 @@ passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: "http://localhost:3007",
-    // profileFields:['emails','displayName','name','picture']
+    profileFields:['emails','displayName','name','picture']
   },
   function(accessToken, refreshToken, profile, callback) {
    return callback(null, profile)
@@ -35,28 +35,32 @@ passport.use(new FacebookStrategy({
 
 
 
-
-
-
- 
-
-
 //routes
-app.get('/auth/facebook',passport.authenticate('facebook'));
+app.get('/auth/facebook',passport.authenticate('facebook',{ scope: ['email'] }));
 
+// app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
-
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/');
+    }
+  );
 app.get('/auth/facebook/callback',passport.authenticate('facebook',{ failureRedirect: '/login' }),(req,res)=>{
     res.redirect('/')
+    console.log(`there`)
 })
+// app.get('/auth/facebook', (req, res) => {
+//     const url = `https://www.facebook.com/v13.0/dialog/oauth?client_id=${process.env.FACEBOOK_APP_ID}&redirect_uri=http://localhost:3007/&scope=email`;
+//     res.redirect(url);
+//   });
 
 
 app.get('/',(req,res)=>{
-    res.send(`${req.user.displayName}`)
+   res.send('welcome to the login page,try logging in')
 })
-// app.get('/login',(req,res)=>{
-//    res.send('welcome to the login page,try logging in')
-// })
  app.listen(3007,()=>{
      console.log('listening on 3007....')
 })
+

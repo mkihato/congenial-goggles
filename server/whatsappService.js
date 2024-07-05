@@ -2,7 +2,8 @@ const axios= require('axios');
 require('dotenv').config();
 
 
-async function sendMessage() {
+async function sendMessage(text) {
+  
   let data = JSON.stringify({
       "messaging_product": "whatsapp",
       "recipient_type": "individual",
@@ -10,7 +11,7 @@ async function sendMessage() {
       "type": "text",
       "text": {
         "preview_url": true,
-        "body": "its 7:00pm"
+        "body": `${text}`
       }
     });
     
@@ -34,4 +35,4 @@ async function sendMessage() {
   }
 }
 
-module.exports= sendMessage();
+module.exports= {sendMessage};

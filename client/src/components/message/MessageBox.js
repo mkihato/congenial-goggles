@@ -4,14 +4,22 @@ import ReactPaginate from 'react-paginate';
 
 
 
-
-
-const MessageBox = ({ messages }) => {
+const MessageBox = ({ messages,onDataFromChild }) => {
   // const [messages, setMessages] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState([]);
+  const [childData, setChildData] = useState('');
+
+  // const handleSendData = () => {
+  //   onDataFromChild(childData);
+  // };
+  
   const [currentPage, setCurrentPage] = useState(0);
   const messagesPerPage = 10;
   
-  console.log(messages)
+  const handleMessageClick = (snippet) => {
+    setSelectedMessage(snippet);
+    onDataFromChild(snippet);
+  };
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
@@ -24,14 +32,16 @@ const MessageBox = ({ messages }) => {
       <h2 className='message-boxtitle'>Welcome to your inbox</h2>
       
       {currentMessages.map((message, index) => (
-        <div key={index} className="message">
+        <div key={index} className="message" onClick={() => handleMessageClick(message.snippet)}>
           <div className="avatar">📧</div>
           <div className="message-content">
-            <h2>{message.id}</h2>
+            <h2>{message.from}</h2>
             <p>{message.snippet}</p>
           </div>
         </div>
       ))}
+      
+
       <ReactPaginate
         previousLabel={'previous'}
         nextLabel={'next'}

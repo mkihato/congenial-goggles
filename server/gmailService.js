@@ -2,7 +2,7 @@ const express= require('express');
 const router= express.Router();
 const axios  = require('axios');
 require('dotenv').config();
-// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const { google }= require('googleapis');
 
 ///utilities
@@ -27,10 +27,10 @@ const auth={
     refreshToken: process.env.REFRESH_TOKEN,
 }
 
-// const mailOptions={
-//     from: 'marvin@telvoip.io',
-//     to: 'marvinkihato@gmail.com',
-//     subject:'first email using gmail api',
+// const mailOptions(emailTo, body)={
+//     from: `marvin@telvoip.io`,
+//     to: `${}`,
+//     subject:`${}`,
 
 // }
  
@@ -142,6 +142,39 @@ async function getMails(req,res){
           }
     }
 }
+async function sendMail(req, res){
+    try{
+        const accessToken = await oAuth2Client.getAccessToken();
+        let token = await accessToken.token;
+
+        const transport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                ...CONSTANTS.auth,
+                accessToken: token,
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        const mailOptions = {
+            ...CONSTANTS.mailOptions,
+            text: 'This is the third test mail using Gmail API...'
+        };
+
+        const result = await transport.sendMail(mailOptions);
+        res.send(result);
+    }
+    catch(error){
+        if (error.response) {
+            console.error('Error status:', error.response.status);
+            console.error('Error data:', error.response.data);
+          } else {
+            console.error('Error message:', error.message);
+          }
+    }
+}
 
 ///routes
 router.get('/mail/list/:email/messages', getMailList);
@@ -149,6 +182,7 @@ router.get('/mail/list/:email/messages/:messageId', readMail);
 router.get('/mail/user/:email', getUser);
 router.get('/mail/drafts/:email', getDrafts);
 router.get('/mail/list/:email', getMails);
+router.get('/mail/send', sendMail);
 
 
 
