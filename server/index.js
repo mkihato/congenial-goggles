@@ -40,7 +40,7 @@ io.on("connection", (socket)=>{
     
 });
 
-app.listen(process.env.PORT,()=>{
+app.listen(5000,()=>{
     console.log(`server is running on ${process.env.PORT}...`)
 });
 
