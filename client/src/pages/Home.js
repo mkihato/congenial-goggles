@@ -2,8 +2,8 @@ import { useState } from "react";
 import FacebookLogin from "../components/fbLogin/FacebookLogin";
 
 const Home=()=>{
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
   
     // const handleSignUp = async (e) => {
     //   e.preventDefault();
@@ -32,7 +32,7 @@ const Home=()=>{
     return(
     <div className="sign-up">
       <h2>Sign Up</h2>
-      <form >
+      {/* <form >
         <div>
           <label>Email:</label>
           <input
@@ -52,7 +52,7 @@ const Home=()=>{
           />
         </div>
         <button type="submit">Sign Up</button>
-      </form>
+      </form> */}
       <hr />
       <FacebookLogin  />
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ChatBubble from '../whatsappChatbb/Chatbubble';
-import axios from 'axios';
+// import axios from 'axios';
 import './chats.css';
 
 const Chats = () => {
