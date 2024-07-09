@@ -42,3 +42,53 @@ body {
   flex: 2;
   background-color: #e0e0e0; /* For visual distinction */
 }
+.sign-up {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sign-up h2 {
+  text-align: center;
+}
+
+.sign-up form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up form div {
+  margin-bottom: 10px;
+}
+
+.sign-up form label {
+  margin-bottom: 5px;
+}
+
+.sign-up form input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.sign-up button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sign-up button:hover {
+  background-color: #45a049;
+}
+
+hr {
+  margin: 20px 0;
+}

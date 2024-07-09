@@ -9,9 +9,9 @@ const MessageBox = ({ messages,onDataFromChild }) => {
   const [selectedMessage, setSelectedMessage] = useState([]);
   const [childData, setChildData] = useState('');
 
-  // const handleSendData = () => {
-  //   onDataFromChild(childData);
-  // };
+  const handleSendData = () => {
+    onDataFromChild(childData);
+  };
   
   const [currentPage, setCurrentPage] = useState(0);
   const messagesPerPage = 10;

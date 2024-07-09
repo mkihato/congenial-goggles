@@ -41,7 +41,7 @@ io.on("connection", (socket)=>{
 });
 
 app.listen(5000,()=>{
-    console.log(`server is running on ${process.env.PORT}...`)
+    console.log(`server is running on port 5000...`)
 });
 
 app.post('/sendMessage',async(req,res)=>{
@@ -60,6 +60,10 @@ app.post('/sendMessage',async(req,res)=>{
 
 app.get('/',async(req,res)=>{
     res.send('welcome to gmail on express')
+})
+
+app.get('/facebooklogin', async(req,res)=>{
+    res.send('you have logged into facebook successfully')
 })
 
 // app.get('/login/facebook',passport.authenticate('facebook',{scope:['email']}));
@@ -87,3 +91,4 @@ app.use('/api', gmailService)
 // app.get('/',(req,res)=>{
 //     res.send(`${req.user.displayName}`)
 // })
+
