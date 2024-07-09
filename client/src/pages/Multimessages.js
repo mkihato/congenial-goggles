@@ -16,12 +16,12 @@ const Multimessages=()=>{
     // useEffect(() => {
     //     // Fetch Gmail messages when the component mounts
 
-    //     axios.get('http://localhost:5000/api/mail/list/marvin@telvoip.io/messages/')
+    //     axios.get('https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/')
     //       .then((response) => {
     //         setMessages(response.data.messages);
     //         const mailIds= response.data.messages
     //         const x =mailIds.map((element) => {
-    //           return axios.get(`http://localhost:5000/api/mail/list/marvin@telvoip.io/messages/${element.id}`).then((res)=>{
+    //           return axios.get(`https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/${element.id}`).then((res)=>{
     //             console.log(res.data)
                 
     //           })
@@ -44,14 +44,14 @@ const Multimessages=()=>{
   
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/mail/list/marvin@telvoip.io/messages/')
+    axios.get('https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/')
       .then((response) => {
         setMessages(response.data.messages);
         
         const mailIds = response.data.messages;
 
         const detailPromises = mailIds.map((element) => {
-          return axios.get(`http://localhost:5000/api/mail/list/marvin@telvoip.io/messages/${element.id}`)
+          return axios.get(`https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/${element.id}`)
             .then((res) => {
               
               const headers = res.data.payload.headers;
