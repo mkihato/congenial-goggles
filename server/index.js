@@ -6,7 +6,7 @@ const cors= require('cors');
 const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
 const whatsappService = require('./whatsappService');
-// const wappWH=require('./webhooks/wappWH');
+// const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
 
 app.use(cors());
@@ -75,6 +75,10 @@ app.get('/facebooklogin', async(req,res)=>{
                 
 app.get('/',gmailService)
 app.use('/api', gmailService)
+
+
+// app.post('/webhook',WHwhatsapp.recieveMessage)
+
 
 // app.post("/whatsapp/webhook",wappWH.recieveMessage );
 // app.get("/whatsapp/webhook",wappWH.messageStatus );

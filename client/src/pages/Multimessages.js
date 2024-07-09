@@ -44,14 +44,14 @@ const Multimessages=()=>{
   
 
   useEffect(() => {
-    axios.get('https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/')
+    axios.get('http://localhost:5000/api/mail/list/marvin@telvoip.io/messages/')
       .then((response) => {
         setMessages(response.data.messages);
         
         const mailIds = response.data.messages;
 
         const detailPromises = mailIds.map((element) => {
-          return axios.get(`https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/${element.id}`)
+          return axios.get(`http://localhost:5000/api/mail/list/marvin@telvoip.io/messages/${element.id}`)
             .then((res) => {
               
               const headers = res.data.payload.headers;
