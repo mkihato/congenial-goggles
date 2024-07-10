@@ -70,7 +70,7 @@ app.post('/sendMessage',async(req,res)=>{
 })   
 
 app.get('/',async(req,res)=>{
-    res.send('welcome to gmail on express')
+    res.send('welcome to the api')
 })
 
 app.get('/facebooklogin', async(req,res)=>{
