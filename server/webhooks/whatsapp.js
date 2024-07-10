@@ -14,27 +14,40 @@ const receiveMessage= async (req, res) => {
   const message = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
 
   // Check if the incoming message contains text
-  if (message?.type === 'text') {
+  //message?.type === 'text'
+  if (message) {
     // Extract the business number to send the reply from it
-    const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
+    // const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
 
     try {
-      // Mark incoming message as read
-      await axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
-        headers: {
-          Authorization: `Bearer ${process.env.Token}`,
-        },
-        data: {
-          messaging_product: 'whatsapp',
-          status: 'read',
-          message_id: message.id,
-        },
-      });
+      
+        const from = message.from; // Sender ID
+        const text = message.text?.body; // Text message content
+    
+        console.log(`Message from ${from}: ${text}`);
+      
+      
     } catch (error) {
       console.error('Error sending reply:', error);
     }
+
+    // try {
+    //   // Mark incoming message as read
+    //   await axios({
+    //     method: 'POST',
+    //     url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
+    //     headers: {
+    //       Authorization: `Bearer ${process.env.Token}`,
+    //     },
+    //     data: {
+    //       messaging_product: 'whatsapp',
+    //       status: 'read',
+    //       message_id: message.id,
+    //     },
+    //   });
+    // } catch (error) {
+    //   console.error('Error sending reply:', error);
+    // }
   }
 
   res.status(200).json(response);
