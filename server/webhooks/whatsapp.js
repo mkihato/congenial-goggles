@@ -1,3 +1,4 @@
+const fs= require('fs')
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
@@ -8,8 +9,17 @@ app.use(bodyParser.json());
 // Webhook to handle incoming messages
 const receiveMessage= async (req, res) => {
   // Log incoming messages
+  const response=JSON.stringify(req.body, null, 2);
+
+  fs.appendFile('./message.txt', response, (err) => {
+    if (err) {
+      console.error('Error appending to file', err);
+    } else {
+      console.log('Data has been appended to file');
+    }
+  });
   console.log('Incoming webhook message:', JSON.stringify(req.body, null, 2));
-  const response=JSON.stringify(req.body, null, 2)
+  
   // Check if the webhook request contains a message
   const message = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
 
