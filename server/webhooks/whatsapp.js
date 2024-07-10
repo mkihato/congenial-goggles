@@ -6,7 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Webhook to handle incoming messages
-app.post('/webhook', async (req, res) => {
+const receiveMessage= async (req, res) => {
   // Log incoming messages
   console.log('Incoming webhook message:', JSON.stringify(req.body, null, 2));
 
@@ -38,10 +38,10 @@ app.post('/webhook', async (req, res) => {
   }
 
   res.sendStatus(200);
-});
+};
 
 // Webhook verification
-app.get('/webhook', (req, res) => {
+const verifyWebhook= (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
@@ -55,5 +55,6 @@ app.get('/webhook', (req, res) => {
     // Respond with '403 Forbidden' if verify tokens do not match
     res.sendStatus(403);
   }
-});
+};
 
+module.exports={verifyWebhook, receiveMessage}

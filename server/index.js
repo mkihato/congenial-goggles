@@ -6,7 +6,7 @@ const cors= require('cors');
 const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
 const whatsappService = require('./whatsappService');
-// const WHwhatsapp= require('./webhooks/whatsapp')
+const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
 // const logger=require('./logger')
 
@@ -82,7 +82,7 @@ app.get('/instagramlogin', async(req,res)=>{
     res.send('you have logged into instagram successfully')
 })
 app.get('/whatsapp',async(req, res)=>{
-    res.send(`${process.env.WHATSAPP_VERIFY_TOKEN}`)
+    res.status(200).json({ token: process.env.WHATSAPP_VERIFY_TOKEN })
 })
 
 
@@ -100,10 +100,8 @@ app.use('/api', gmailService)
 // app.post('/webhook',WHwhatsapp.recieveMessage)
 
 
-// app.post("/whatsapp/webhook",wappWH.recieveMessage );
-// app.get("/whatsapp/webhook",wappWH.messageStatus );
-
-// app.get('/auth/facebook',passport.authenticate('facebook'));
+app.post("/webhook",WHwhatsapp.receiveMessage );
+app.get("/webhook",WHwhatsapp.verifyWebhook );
 
 
 
@@ -112,58 +110,4 @@ app.use('/api', gmailService)
 // })
 
 
-// app.get('/',(req,res)=>{
-//     res.send(`${req.user.displayName}`)
-// })
 
-
-app.post('/webhook', async (req, res) => {
-// Log incoming messages
-console.log('Incoming webhook message:', JSON.stringify(req.body, null, 2));
-
-// Check if the webhook request contains a message
-const message = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
-
-// Check if the incoming message contains text
-if (message?.type === 'text') {
-    // Extract the business number to send the reply from it
-    const business_phone_number_id = req.body.entry?.[0].changes?.[0].value?.metadata?.phone_number_id;
-
-    try {
-    // Mark incoming message as read
-    await axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
-        headers: {
-        Authorization: `Bearer ${process.env.GRAPH_API_TOKEN}`,
-        },
-        data: {
-        messaging_product: 'whatsapp',
-        status: 'read',
-        message_id: message.id,
-        },
-    });
-    } catch (error) {
-    console.error('Error sending reply:', error);
-    }
-}
-
-res.sendStatus(200);
-});
-  
-  // Webhook verification
-app.get('/webhook', (req, res) => {
-const mode = req.query['hub.mode'];
-const token = req.query['hub.verify_token'];
-const challenge = req.query['hub.challenge'];
-
-// Check the mode and token sent are correct
-if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
-    // Respond with 200 OK and challenge token from the request
-    res.status(200).send(challenge);
-    console.log('Webhook verified successfully!');
-} else {
-    // Respond with '403 Forbidden' if verify tokens do not match
-    res.sendStatus(403);
-}
-});
