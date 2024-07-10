@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 const receiveMessage= async (req, res) => {
   // Log incoming messages
   console.log('Incoming webhook message:', JSON.stringify(req.body, null, 2));
-
+  const response=JSON.stringify(req.body, null, 2)
   // Check if the webhook request contains a message
   const message = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
 
@@ -37,7 +37,7 @@ const receiveMessage= async (req, res) => {
     }
   }
 
-  res.sendStatus(200);
+  res.status(200).json(response);
 };
 
 // Webhook verification
