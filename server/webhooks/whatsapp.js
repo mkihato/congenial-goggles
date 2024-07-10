@@ -22,9 +22,9 @@ const receiveMessage= async (req, res) => {
       // Mark incoming message as read
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${process.env}/${business_phone_number_id}/messages`,
+        url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
         headers: {
-          Authorization: `Bearer ${process.env.GRAPH_API_TOKEN}`,
+          Authorization: `Bearer ${process.env.Token}`,
         },
         data: {
           messaging_product: 'whatsapp',
@@ -47,7 +47,7 @@ const verifyWebhook= (req, res) => {
   const challenge = req.query['hub.challenge'];
 
   // Check the mode and token sent are correct
-  if (mode === 'subscribe' && token === process.env.WEBHOOK_VERIFY_TOKEN) {
+  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
     // Respond with 200 OK and challenge token from the request
     res.status(200).send(challenge);
     console.log('Webhook verified successfully!');
