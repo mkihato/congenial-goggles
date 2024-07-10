@@ -24,6 +24,7 @@
     "socket.io": "^4.7.5",
     "tdl": "^8.0.1",
     "tdlib": "^0.0.0-alpha.0",
-    "telegram-mtproto": "^1.0.5"
+    "telegram-mtproto": "^1.0.5",
+    "winston": "^3.13.0"
   }
 }

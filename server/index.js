@@ -8,13 +8,15 @@ const gmailService=require('./gmailService');
 const whatsappService = require('./whatsappService');
 // const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
-
+// const logger=require('./logger')
 
 process.on('uncaughtException', (err) => {
-    console.log('UNCAUGHT EXCEPTION!');
+    console.warn('UNCAUGHT EXCEPTION!');
     console.log(err.message);
     process.exit(1);
   });
+
+
 
   
 
@@ -72,6 +74,7 @@ app.get('/',async(req,res)=>{
 })
 
 app.get('/facebooklogin', async(req,res)=>{
+    logger.info('You are logging in...')
     res.send('you have logged into facebook successfully')
 })
 
@@ -104,4 +107,5 @@ app.use('/api', gmailService)
 // app.get('/',(req,res)=>{
 //     res.send(`${req.user.displayName}`)
 // })
+
 
