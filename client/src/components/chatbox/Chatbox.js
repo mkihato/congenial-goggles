@@ -28,7 +28,7 @@ const ChatBox = ({setnewMessage}) => {
     
 
     try {
-      await axios.post('http://localhost:5000/sendMessage',{sendMessage});
+      await axios.post('http://localhost:8000/sendMessage',{sendMessage});
       setsendMessage('')
       setMessages([...messages, { text: sendMessage, isSent: true }]);
 

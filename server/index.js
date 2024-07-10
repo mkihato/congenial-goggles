@@ -9,6 +9,15 @@ const whatsappService = require('./whatsappService');
 // const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
 
+
+process.on('uncaughtException', (err) => {
+    console.log('UNCAUGHT EXCEPTION!');
+    console.log(err.message);
+    process.exit(1);
+  });
+
+  
+
 app.use(cors());
 
 const server= http.createServer(app);
@@ -40,8 +49,8 @@ io.on("connection", (socket)=>{
     
 });
 
-app.listen(5000,()=>{
-    console.log(`server is running on port 5000...`)
+app.listen(8000,()=>{
+    console.log(`server is running on port 8000...`)
 });
 
 app.post('/sendMessage',async(req,res)=>{
