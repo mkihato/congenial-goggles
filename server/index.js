@@ -74,7 +74,7 @@ app.get('/',async(req,res)=>{
 })
 
 app.get('/facebooklogin', async(req,res)=>{
-    logger.info('You are logging in...')
+    
     res.send('you have logged into facebook successfully')
 })
 
