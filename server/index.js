@@ -77,6 +77,14 @@ app.get('/facebooklogin', async(req,res)=>{
     
     res.send('you have logged into facebook successfully')
 })
+app.get('/instagramlogin', async(req,res)=>{
+    
+    res.send('you have logged into instagram successfully')
+})
+app.get('/whatsapp',async(req, res)=>{
+    res.send(`You're in whatsapp now....`)
+})
+
 
 // app.get('/login/facebook',passport.authenticate('facebook',{scope:['email']}));
 
