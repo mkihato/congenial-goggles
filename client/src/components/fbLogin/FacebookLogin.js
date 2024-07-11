@@ -5,14 +5,14 @@ const FacebookLogin = ({ onLogin }) => {
   useEffect(() => {
     // Initialize the Facebook SDK
     window.fbAsyncInit = function () {
-      window.FB.init({
-        appId: '7767892629969878',
-        cookie: true,
-        xfbml: true,
-        version: 'v20.0'
-      });
+      // window.FB.init({
+      //   appId: '7767892629969878',
+      //   cookie: true,
+      //   xfbml: true,
+      //   version: 'v20.0'
+      // });
 
-      window.FB.AppEvents.logPageView();
+      // window.FB.AppEvents.logPageView();
     };
 
     // Load the Facebook SDK script
