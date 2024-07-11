@@ -85,29 +85,25 @@ app.get('/whatsapp',async(req, res)=>{
     res.status(200).json({ token: process.env.WHATSAPP_VERIFY_TOKEN })
 })
 
-
-// app.get('/login/facebook',passport.authenticate('facebook',{scope:['email']}));
-
-// app.get('/facebook', passport.authenticate('facebook',(req,res)=>{
-//     res.redirect('/fb')
-// }))
-            
+//////////////////////////////////////////////////////       
                 
 app.get('/',gmailService)
 app.use('/api', gmailService)
 
 
-// app.post('/webhook',WHwhatsapp.recieveMessage)
+////////////////////////////////////////////////////////////////////
 
 
 app.post("/webhook",WHwhatsapp.receiveMessage );
 app.get("/webhook",WHwhatsapp.verifyWebhook );
 
 
-
-// app.get('/auth/facebook/callback',passport.authenticate('facebook',{ failureRedirect: '/login' }),(req,res)=>{
-//     res.redirect('/')
-// })
-
+///////////////////////////////////////////////////////////////////////////
+app.get('/auth/callback', (req, res) => {
+    const accessToken = req.query.access_token;
+    // Store the access token in your database or session
+    console.log('Access Token:', accessToken);
+    res.send('Login successful! You can close this window.');
+  });
 
 
