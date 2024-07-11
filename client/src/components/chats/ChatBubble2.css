@@ -1,0 +1,18 @@
+.chat-bubble2 {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  
+  .sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+  
+  .received {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    align-self: flex-start;
+  }
+  

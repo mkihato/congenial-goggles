@@ -1,6 +1,9 @@
 import "../App.css"
 
 
+
+
+
 const Ticket=()=>{
     
     
@@ -11,7 +14,8 @@ const Ticket=()=>{
          
         </div>
         <div className="section right-section">
-     
+          
+        
         </div>
         </div>
     )

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import FacebookLogin from "../components/fbLogin/FacebookLogin";
 
 const Home=()=>{

@@ -5,41 +5,14 @@ import axios from 'axios';
 import "../App.css"
 
 
-
-
-
-
 const Multimessages=()=>{
     const [messages, setMessages] = useState([]);
 
-
-    // useEffect(() => {
-    //     // Fetch Gmail messages when the component mounts
-
-    //     axios.get('https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/')
-    //       .then((response) => {
-    //         setMessages(response.data.messages);
-    //         const mailIds= response.data.messages
-    //         const x =mailIds.map((element) => {
-    //           return axios.get(`https://cloud.telvoip.io/api/mail/list/marvin@telvoip.io/messages/${element.id}`).then((res)=>{
-    //             console.log(res.data)
-                
-    //           })
-    //         });
-    //         console.log(x)
-             
-          
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error fetching Gmail messages:', error);
-    //       });
-    //   }, []);
     const [messageDetails, setMessageDetails] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState('');
 
     const handleDataFromChild = (data) => {
       setSelectedMessage(data);
-      console.log(data)
     };
   
 
