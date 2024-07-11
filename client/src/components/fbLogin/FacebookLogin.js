@@ -9,7 +9,7 @@ const FacebookLogin = ({ onLogin }) => {
         appId: '7767892629969878',
         cookie: true,
         xfbml: true,
-        version: 'v19.0'
+        version: 'v20.0'
       });
 
       window.FB.AppEvents.logPageView();
