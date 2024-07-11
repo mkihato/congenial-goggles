@@ -43,13 +43,15 @@ const FacebookLogin = ({ onLogin }) => {
           console.log('User cancelled login or did not fully authorize.');
         }
       },
-      { scope: 'public_profile,email,pages_messaging' }
+      { scope: 'public_profile,email,pages_messaging,pages_manage_metadata,pages_read_engagement,pages_show_list,pages_manage_posts,pages_manage_engagement' }
     );
   };
 
   return (
-      
-    <button onClick={handleFBLogin}>Login with Facebook</button>
+    <div className="fb-login-button" data-width="20" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="false">
+      <button onClick={handleFBLogin}>Login with Facebook</button>
+    </div>
+    
   );
 };
 
