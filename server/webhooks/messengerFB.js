@@ -18,6 +18,7 @@ const verifyWebhook= (req, res) => {
     // Respond with 200 OK and challenge token from the request
     res.status(200).send(challenge);
     console.log('Webhook verified successfully!');
+    
   } else {
     // Respond with '403 Forbidden' if verify tokens do not match
     res.sendStatus(403);
