@@ -42,23 +42,23 @@ const receiveMessage= async (req, res) => {
       console.error('Error sending reply:', error);
     }
 
-    // try {
-    //   // Mark incoming message as read
-    //   await axios({
-    //     method: 'POST',
-    //     url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
-    //     headers: {
-    //       Authorization: `Bearer ${process.env.Token}`,
-    //     },
-    //     data: {
-    //       messaging_product: 'whatsapp',
-    //       status: 'read',
-    //       message_id: message.id,
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.error('Error sending reply:', error);
-    // }
+    try {
+      // Mark incoming message as read
+      await axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
+        headers: {
+          Authorization: `Bearer ${process.env.Token}`,
+        },
+        data: {
+          messaging_product: 'whatsapp',
+          status: 'read',
+          message_id: message.id,
+        },
+      });
+    } catch (error) {
+      console.error('Error sending reply:', error);
+    }
   }
 
   res.status(200).json(response);
