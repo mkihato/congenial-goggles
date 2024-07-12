@@ -34,11 +34,12 @@ const FacebookLogin = () => {
     window.FB.login(
       function (response) {
         if (response.authResponse) {
-          console.log('Welcome! Fetching your information.... ');
+          console.log('Welcome! Fetching your information.... ');  
           window.FB.api('/me', function (response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log(response);
           });
+          window.location.href = `/auth/callback?access_token=${response.authResponse.accessToken}`
         } else {
           console.log('User cancelled login or did not fully authorize.');
         }
@@ -46,9 +47,7 @@ const FacebookLogin = () => {
       { scope: 'public_profile,email,pages_messaging,pages_manage_metadata,pages_read_engagement,pages_show_list,pages_manage_posts,pages_manage_engagement,business_management' }
     );
     
-    window.FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
+    
   };
 
   return (
