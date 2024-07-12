@@ -5,7 +5,7 @@ const {Server}= require('socket.io');
 const cors= require('cors');
 const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
-const whatsappService = require('./whatsappService');
+const WHfacebook=require('./webhooks/messengerFB')
 const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
 // const logger=require('./logger')
@@ -15,10 +15,6 @@ process.on('uncaughtException', (err) => {
     console.log(err.message);
     process.exit(1);
   });
-
-
-
-  
 
 app.use(cors());
 
@@ -34,11 +30,6 @@ const io = new Server(server, {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.get('/api', (req,res)=>{
-    //     res.send({"users":["user 1", "user 2"]})
-    // })
-    
-    
     
 io.on("connection", (socket)=>{
     console.log(`user connected:${socket.id}`)
@@ -104,6 +95,8 @@ app.get('/auth/callback', (req, res) => {
     // Store the access token in your database or session
     console.log('Access Token:', accessToken);
     res.send('Login successful! You can close this window.');
-  });
+});
 
-
+/////////////////////////////////////////////////////////////////////////
+app.post("/fbwebhook",WHfacebook.receiveMessage );
+app.get("/fbwebhook",WHfacebook.verifyWebhook )

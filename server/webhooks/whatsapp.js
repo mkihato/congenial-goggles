@@ -18,6 +18,7 @@ const receiveMessage= async (req, res) => {
       console.log('Data has been appended to file');
     }
   });
+  
   console.log('Incoming webhook message:', JSON.stringify(req.body, null, 2));
   
   // Check if the webhook request contains a message
