@@ -152,7 +152,7 @@ async function sendMail(req, res){
         const transport = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                auth,
+                ...CONSTANTS.auth,
                 accessToken: token,
             },
             tls: {

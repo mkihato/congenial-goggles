@@ -46,7 +46,7 @@ const receiveMessage= async (req, res) => {
       // Mark incoming message as read
       await axios({
         method: 'POST',
-        url: `https://graph.facebook.com/${process.env.Version}/${business_phone_number_id}/messages`,
+        url: `https://graph.facebook.com/${process.env.Version}/${process.env.Phone_Number_ID}/messages`,
         headers: {
           Authorization: `Bearer ${process.env.Token}`,
         },
