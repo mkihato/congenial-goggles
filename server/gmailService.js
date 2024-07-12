@@ -33,6 +33,8 @@ const auth={
 //     subject:`${}`,
 
 // }
+
+
  
 
 const oAuth2Client= new google.auth.OAuth2(
@@ -150,7 +152,7 @@ async function sendMail(req, res){
         const transport = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                ...CONSTANTS.auth,
+                auth,
                 accessToken: token,
             },
             tls: {
@@ -158,10 +160,16 @@ async function sendMail(req, res){
             }
         });
 
-        const mailOptions = {
-            ...CONSTANTS.mailOptions,
-            text: 'This is the third test mail using Gmail API...'
-        };
+        // const mailOptions = {
+        //     ...CONSTANTS.mailOptions,
+        //     text: 'This is the third test mail using Gmail API...'
+        // };
+        const mailOptions={
+            from: 'marvin@telvoip.io',
+            to: 'marvinkihato@gmail.com',
+            subject:'first email using gmail api',
+        
+        }
 
         const result = await transport.sendMail(mailOptions);
         res.send(result);
