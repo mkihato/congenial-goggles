@@ -6,6 +6,7 @@ const cors= require('cors');
 const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
 const WHfacebook=require('./webhooks/messengerFB')
+const whatsappService= require('./whatsappService')
 const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
 // const logger=require('./logger')
