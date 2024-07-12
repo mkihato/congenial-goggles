@@ -100,3 +100,8 @@ app.get('/auth/callback', (req, res) => {
 /////////////////////////////////////////////////////////////////////////
 app.post("/fbwebhook",WHfacebook.receiveMessage );
 app.get("/fbwebhook",WHfacebook.verifyWebhook )
+
+app.get('/token',()=>{
+
+    console.log(process.env.FACEBOOK_VERIFY_TOKEN)
+} )
