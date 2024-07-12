@@ -14,7 +14,7 @@ async function sendMessage(text) {
         "body": `${text}`
       }
     });
-    
+  console.log(data);
   let postConfig = {
   method: 'post',
   maxBodyLength: Infinity,
@@ -25,7 +25,7 @@ async function sendMessage(text) {
   },
   data : data
   };
-
+ 
   try {
     const response = await axios.request(postConfig);
     console.log(JSON.stringify(response.data));
