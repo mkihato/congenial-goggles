@@ -92,3 +92,25 @@ body {
 hr {
   margin: 20px 0;
 }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 1px solid #ccc;
+}
+
+.nav-container {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  width: 10px;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.inbox-container {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 10px;
+  overflow-y: auto;
+}

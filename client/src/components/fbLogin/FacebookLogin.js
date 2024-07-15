@@ -46,6 +46,28 @@ const FacebookLogin = () => {
       },
       { scope: 'public_profile,email,pages_messaging,pages_manage_metadata,pages_read_engagement,pages_show_list,pages_manage_posts,pages_manage_engagement,business_management' }
     );
+    window.FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        // the user is logged in and has authenticated your
+        // app, and response.authResponse supplies
+        // the user's ID, a valid access token, a signed
+        // request, and the time the access token 
+        // and signed request each expire
+        var uid = response.authResponse.userID;
+        var accessToken = response.authResponse.accessToken;
+
+        console.log(uid);
+        console.log(accessToken);
+        
+      } else if (response.status === 'not_authorized') {
+        // the user is logged in to Facebook,
+        console.log('You have not authorized,please try logging in again') 
+        // but has not authenticated your app
+      } else {
+        // the user isn't logged in to Facebook.
+        console.log('You are not logged in, please go back to the homepage')
+      }
+     });
     
     
   };
