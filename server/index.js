@@ -56,7 +56,7 @@ app.post('/sendMessage',async(req,res)=>{
     await whatsappService.sendMessage(sendMessage)
 
     res.sendStatus(200)
-   } catch (error) {
+   } catch (error) { 
     console.error(error)
    }
 })   

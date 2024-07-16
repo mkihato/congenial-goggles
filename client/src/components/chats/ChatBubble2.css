@@ -16,3 +16,8 @@
     align-self: flex-start;
   }
   
+/* span{
+  font-size: small;
+  display: flex;
+  justify-content: flex-end;
+} */

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import ChatBubble2 from './ChatBubble2';
 import './chats.css';
+import axios from "axios"
+
 
 const Chats = () => {
   const [messages, setMessages] = useState([
@@ -9,10 +11,23 @@ const Chats = () => {
   ]);
   const [input, setInput] = useState('');
 
-  const sendMessage = () => {
+  const sendMessage = async() => {
     if (input.trim()) {
       setMessages([...messages, { text: input, isSent: true }]);
       setInput('');
+    }
+    try {
+      await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
+      // setsendMessage('')
+      setMessages([...messages, { text: sendMessage, isSent: true }]);
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
     }
   };
 
@@ -27,6 +42,7 @@ const Chats = () => {
                 <input
                   type="text"
                   value={input}
+                  onKeyDown={handleKeyPress}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Type a message..."
                 />
