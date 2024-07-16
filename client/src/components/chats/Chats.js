@@ -16,25 +16,19 @@ const Chats = ({setnewMessage}) => {
   };
   const handleSendMessage = async() => {
     
+    if (sendMessage.trim() !== '') {
+      const newMessage = { text: sendMessage, isSent: true };
+      setMessages([...messages, newMessage]);
+      setsendMessage(''); // Clear the input field
 
     try {
-      await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
-      setsendMessage('')
-      setMessages([...messages, { text: sendMessage, isSent: true }]);
+      await axios.post('https://api.telvoip.io/sendMessage',{message: sendMessage});
 
     } catch (error) {
       console.error('Error sending message:', error);
     }
-
-     
     
-    // if (message.trim()) {
-    //   setMessages([...messages, { text: message, isSent: true }]);
-    //   setMessage('');
-    // }
-    
-    
-    
+  }
   };
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -45,10 +39,10 @@ const Chats = ({setnewMessage}) => {
   return (
     <div className="chats-container">
       <div className="chat-area">
-      <ChatBubble2 message={setnewMessage} isSent={false} />
-        {/* {messages.map((message, index) => (
+      {/* <ChatBubble2 message={setnewMessage} isSent={false} /> */}
+        {messages.map((message, index) => (
           <ChatBubble2 key={index} message={message.text} isSent={message.isSent} />
-        ))} */}
+        ))}
       </div>
       <div className="input-area">
                 <input
