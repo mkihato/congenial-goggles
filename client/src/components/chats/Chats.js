@@ -35,6 +35,18 @@ const Chats = ({setnewMessage}) => {
       handleSendMessage();
     }
   };
+  const receiveMessage = (receivedMessage) => {
+    setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
+  };
+
+  // Simulate receiving messages for demonstration purposes
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     receiveMessage('This is a received message.');
+  //   }, 10000); // Simulate receiving a message every 10 seconds
+
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div className="chats-container">
