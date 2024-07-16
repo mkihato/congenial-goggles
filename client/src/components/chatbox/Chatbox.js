@@ -17,7 +17,7 @@ const ChatBox = ({setnewMessage}) => {
     { text: 'I am good, thank you!', isSent: true },
   ]);
   // setMessages({text: setnewMessage, isSent:true})
-  
+   
 
   const handleInputChange = (e) => {
     setsendMessage(e.target.value);

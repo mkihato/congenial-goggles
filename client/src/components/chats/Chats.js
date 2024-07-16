@@ -1,52 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import ChatBubble2 from './ChatBubble2';
 import './chats.css';
-import axios from "axios"
+import axios from 'axios';
 
+const Chats = ({setnewMessage}) => {
+  const [sendMessage, setsendMessage] = useState('');
 
-const Chats = () => {
   const [messages, setMessages] = useState([
-    { text: 'Hello! How can I help you today?', isSent: false },
-    { text: 'I have a question about my order.', isSent: true },
+    { text: 'Hello! How are you?', isSent: false },
+    { text: 'I am good, thank you!', isSent: true },
   ]);
-  const [input, setInput] = useState('');
+  const handleInputChange = (e) => {
+    setsendMessage(e.target.value);
+    
+  };
+  const handleSendMessage = async() => {
+    
 
-  const sendMessage = async() => {
-    if (input.trim()) {
-      setMessages([...messages, { text: input, isSent: true }]);
-      setInput('');
-    }
     try {
       await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
-      // setsendMessage('')
+      setsendMessage('')
       setMessages([...messages, { text: sendMessage, isSent: true }]);
 
     } catch (error) {
       console.error('Error sending message:', error);
     }
+
+     
+    
+    // if (message.trim()) {
+    //   setMessages([...messages, { text: message, isSent: true }]);
+    //   setMessage('');
+    // }
+    
+    
+    
   };
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      sendMessage();
+      handleSendMessage();
     }
   };
 
   return (
     <div className="chats-container">
       <div className="chat-area">
-        {messages.map((message, index) => (
+      <ChatBubble2 message={setnewMessage} isSent={false} />
+        {/* {messages.map((message, index) => (
           <ChatBubble2 key={index} message={message.text} isSent={message.isSent} />
-        ))}
+        ))} */}
       </div>
       <div className="input-area">
                 <input
                   type="text"
-                  value={input}
                   onKeyDown={handleKeyPress}
-                  onChange={(e) => setInput(e.target.value)}
+                  value={sendMessage}
+                  onChange={handleInputChange}
                   placeholder="Type a message..."
                 />
-                <button onClick={sendMessage}>Send</button>
+                <button onClick={handleSendMessage}>Send</button>
               </div>
     </div>
   );

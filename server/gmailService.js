@@ -133,7 +133,6 @@ async function getMails(req,res){
         const response = await axios(config);
         
         res.json(response.data);
-
     }
     catch(error){
         if (error.response) {
