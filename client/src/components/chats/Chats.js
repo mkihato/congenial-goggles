@@ -22,7 +22,7 @@ const Chats = ({setnewMessage}) => {
       setsendMessage(''); // Clear the input field
 
     try {
-      await axios.post('https://api.telvoip.io/sendMessage',{message: sendMessage});
+      await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
 
     } catch (error) {
       console.error('Error sending message:', error);
