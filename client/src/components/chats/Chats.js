@@ -29,6 +29,7 @@ const Chats = ({setnewMessage}) => {
       const newMessage = { text: sendMessage, isSent: true };
       setMessages([...messages, newMessage]);
       setsendMessage(''); // Clear the input field
+      socket.emit('sendMessagewa',{message: sendMessage})
 
     try {
       await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
@@ -49,13 +50,13 @@ const Chats = ({setnewMessage}) => {
   };
 
   // Simulate receiving messages for demonstration purposes
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     receiveMessage('This is a received message.');
-  //   }, 10000); // Simulate receiving a message every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      receiveMessage('This is a received message.');
+    }, 10000); // Simulate receiving a message every 10 seconds
 
-  //   return () => clearInterval(interval);
-  // }, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="chats-container">

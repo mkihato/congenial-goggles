@@ -1,6 +1,6 @@
 const express= require('express');
 const app= express();
-const http= require('http')
+const http= require('http');
 const {Server}= require('socket.io');
 const server= http.createServer(app)
 const cors= require('cors');
@@ -39,20 +39,18 @@ app.listen(8000,()=>{
     console.log(`server is running on port 8000...`)
 });
 
-io.on("connection",socket=>{
-    console.log(`${socket.id}`);
-})
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////
 app.post('/sendMessage',async(req,res)=>{
    try {
     const {sendMessage}= req.body
-    io.emit('newMessage', sendMessage)
     console.log('received',sendMessage)
+    io.on("connection",(socket)=>{
+        
+
+        socket.on('sendMessagewa',(data)=>{
+            console.log(`received from socket:${data}`)
+        })
+    })
 
 
     await whatsappService.sendMessage(sendMessage)
