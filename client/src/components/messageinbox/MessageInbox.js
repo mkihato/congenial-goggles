@@ -5,7 +5,15 @@ const MessageInbox = ({ channel }) => {
   const renderMessages = () => {
     switch (channel) {
       case 'whatsapp':
-        return <div>WhatsApp messages...</div>;
+        return (
+          <div className="message" >
+          <div className="avatar">📧</div>
+          <div className="message-content">
+            <h2>John Doe</h2>
+            <p>Hello, how are you</p>
+          </div>
+        </div>
+        );
       case 'facebook':
         return <div>Facebook messages...</div>;
       case 'instagram':

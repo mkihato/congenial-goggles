@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
-
 // Webhook to handle incoming messages
 const receiveMessage= async (req, res) => {
   // Log incoming messages
@@ -23,6 +22,7 @@ const receiveMessage= async (req, res) => {
   
   // Check if the webhook request contains a message
   const message = req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+  
 
   // Check if the incoming message contains text
   //message?.type === 'text'

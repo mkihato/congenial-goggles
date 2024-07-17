@@ -1,7 +1,8 @@
 const express= require('express');
 const app= express();
-const http = require('http');
+const http= require('http')
 const {Server}= require('socket.io');
+const server= http.createServer(app)
 const cors= require('cors');
 const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
@@ -10,6 +11,14 @@ const whatsappService= require('./whatsappService')
 const WHwhatsapp= require('./webhooks/whatsapp')
 require('dotenv').config();
 // const logger=require('./logger')
+app.use(cors());
+
+const io = new Server(server, {
+    cors: {
+      origin: 'http://localhost:3000',
+      methods:['GET','POST'],
+    },
+  });
 
 process.on('uncaughtException', (err) => {
     console.warn('UNCAUGHT EXCEPTION!');
@@ -17,39 +26,32 @@ process.on('uncaughtException', (err) => {
     process.exit(1);
   });
 
-app.use(cors());
 
-const server= http.createServer(app);
-const io = new Server(server, {
-    cors:{
-        origin: "http://localhost:3000",
-        methods: ["GET","POST"],
-        
-    }
-})
+
 //middleware to read texts
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
     
-io.on("connection", (socket)=>{
-    console.log(`user connected:${socket.id}`)
-    
-    socket.on("sendMessage: ",(message)=>{
-        const messagewithSender={...message,sender:socket.id};
-        io.emit("message",messagewithSender)
-        console.log(message)
-    })  
-    
-});
 
+ 
 app.listen(8000,()=>{
     console.log(`server is running on port 8000...`)
 });
 
+io.on("connection",socket=>{
+    console.log(`${socket.id}`);
+})
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
 app.post('/sendMessage',async(req,res)=>{
    try {
     const {sendMessage}= req.body
+    io.emit('newMessage', sendMessage)
     console.log('received',sendMessage)
 
 
@@ -59,7 +61,9 @@ app.post('/sendMessage',async(req,res)=>{
    } catch (error) { 
     console.error(error)
    }
-})   
+}) 
+
+////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/',async(req,res)=>{
     res.send('welcome to the api')

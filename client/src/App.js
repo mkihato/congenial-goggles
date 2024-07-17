@@ -4,9 +4,7 @@ import CallIcon from '@mui/icons-material/Call';
 import MessageIcon from '@mui/icons-material/Message';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import EmailSharpIcon from '@mui/icons-material/EmailSharp'
-
 import HomeIcon from '@mui/icons-material/Home';
-
 import {BrowserRouter, Route, Routes, NavLink} from "react-router-dom"
 import Home from "./pages/Home"
 import Call from "./pages/Call"
