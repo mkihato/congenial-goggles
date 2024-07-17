@@ -5,6 +5,16 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
+// const http= require('http');
+// const server= http.createServer(app)
+// const socketIo= require('socket.io');
+// const io= socketIo(server)
+
+
+
+
+
+
 // Webhook to handle incoming messages
 const receiveMessage= async (req, res) => {
   // Log incoming messages
@@ -36,8 +46,10 @@ const receiveMessage= async (req, res) => {
         const text = message.text?.body; // Text message content
     
         console.log(`Message from ${from}: ${text}`);
-      
-      
+        // Emit the message to all connected clients
+        const io = req.app.get('socketio');
+        io.emit('newMessage', { from, text });
+        
     } catch (error) {
       console.error('Error sending reply:', error);
     }

@@ -2,7 +2,7 @@ const express= require('express');
 const app= express();
 const http= require('http');
 const socketIo= require('socket.io');
-const server= http.createServer(app)
+const server= http.createServer(app);
 const cors= require('cors');
 const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
@@ -53,10 +53,10 @@ app.post('/sendMessage',async(req,res)=>{
 ////////socket handler /////////////////////////////////
 
 io.on('connection', (socket) => {
-    console.log('New client connected');
+    console.log('New client-server connected');
   
     socket.on('disconnect', () => {
-      console.log('Client disconnected');
+      console.log('Client-server disconnected');
     });
   });
 ////////////////////////////////////////////////////////////////////////////////////

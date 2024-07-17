@@ -33,7 +33,7 @@ const Chats = ({setnewMessage}) => {
 
     try {
       await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
-      socket.emit('sendMessagewa',{sendMessage})
+      
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -46,9 +46,13 @@ const Chats = ({setnewMessage}) => {
       handleSendMessage();
     }
   };
-  const receiveMessage = (receivedMessage) => {
-    setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
-  };
+  // const receiveMessage = async(receivedMessage) => {
+
+    
+  //   setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
+      
+   
+  // };
 
   // Simulate receiving messages for demonstration purposes
   useEffect(() => {
@@ -59,7 +63,11 @@ const Chats = ({setnewMessage}) => {
       console.log('connected to socket server')
     })
 
-    socket.on('newMessage',receiveMessage('this is a test'))
+    socket.on('newMessage',(message)=>{
+      setMessages(prevMessages => [...prevMessages, { text: message, isSent: false }]);
+
+      console.log(`new message received: ${message}`)
+    })
 
     socket.on('disconnect', () => {
       console.log('Disconnected from socket server');
