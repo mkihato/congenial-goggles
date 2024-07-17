@@ -1,6 +1,7 @@
 import React from 'react';
 import './MessageInbox.css';
 
+
 const MessageInbox = ({ channel }) => {
   const renderMessages = () => {
     switch (channel) {

@@ -4,7 +4,7 @@ import './chats.css';
 import axios from 'axios';
 import io from "socket.io-client"
 
-const socket=io.connect("https://api.telvoip.io");
+const SOCKET_URL=`https://api.telvoip.io`;
 
 const Chats = ({setnewMessage}) => {
   const [sendMessage, setsendMessage] = useState('');
@@ -29,10 +29,11 @@ const Chats = ({setnewMessage}) => {
       const newMessage = { text: sendMessage, isSent: true };
       setMessages([...messages, newMessage]);
       setsendMessage(''); // Clear the input field
-      socket.emit('sendMessagewa',{message: sendMessage})
+      
 
     try {
       await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
+      socket.emit('sendMessagewa',{sendMessage})
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -51,11 +52,27 @@ const Chats = ({setnewMessage}) => {
 
   // Simulate receiving messages for demonstration purposes
   useEffect(() => {
-    const interval = setInterval(() => {
-      receiveMessage('This is a received message.');
-    }, 10000); // Simulate receiving a message every 10 seconds
 
-    return () => clearInterval(interval);
+    const socket= io(SOCKET_URL);
+
+    socket.on('connect', ()=>{
+      console.log('connected to socket server')
+    })
+
+    socket.on('newMessage',receiveMessage('this is a test'))
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from socket server');
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+    // const interval = setInterval(() => {
+    //   receiveMessage('This is a received message.');
+    // }, 10000); // Simulate receiving a message every 10 seconds
+
+    // return () => clearInterval(interval);
   }, []);
 
   return (
