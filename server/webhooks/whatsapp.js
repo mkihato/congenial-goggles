@@ -50,7 +50,7 @@ const receiveMessage= async (req, res) => {
         const io = req.app.get('socketio');
 
         if(io){
-          io.emit('newMessage', { from, text });
+          io.emit('newMessage', `${text}`);
         }else{
           console.error('io not initialized')
         }

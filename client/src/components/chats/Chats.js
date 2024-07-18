@@ -46,13 +46,13 @@ const Chats = ({setnewMessage}) => {
       handleSendMessage();
     }
   };
-  // const receiveMessage = async(receivedMessage) => {
+  const receiveMessage = async(receivedMessage) => {
 
     
-  //   setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
+    setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
       
    
-  // };
+  };
 
   // Simulate receiving messages for demonstration purposes
   useEffect(() => {
@@ -64,7 +64,7 @@ const Chats = ({setnewMessage}) => {
     })
 
     socket.on('newMessage',(message)=>{
-      setMessages(prevMessages => [...prevMessages, { text: message, isSent: false }]);
+      receiveMessage(message)
 
       console.log(`new message received: ${message}`)
     })
