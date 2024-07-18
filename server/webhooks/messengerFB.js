@@ -6,10 +6,13 @@ require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
 
+
+
+const VERIFY_TOKEN= process.env.FACEBOOK_VERIFY_TOKEN
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
 // Webhook verification
 const verifyWebhook= (req, res) => {
-
-  const VERIFY_TOKEN= process.env.FACEBOOK_VERIFY_TOKEN
 
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
@@ -128,7 +131,7 @@ function handlePostback(senderPsid, receivedPostback) {
 function callSendAPI(senderPsid, response) {
 
   // The page access token we have generated in your app settings
-  const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+  
 
   // Construct the message body
   let requestBody = {

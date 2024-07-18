@@ -20,7 +20,7 @@ const Chats = ({setnewMessage}) => {
     
   };
   const handleSendMessage = async() => {
-
+    const socket= io(SOCKET_URL)
    
     
     if (sendMessage.trim() !== '') {
@@ -47,18 +47,7 @@ const Chats = ({setnewMessage}) => {
     }
   };
 
-  const receiveMessage = (message) => {
-    const newMessage = { text: message, isSent: false, id: message.id };
-    setMessages((prevMessages) =>{ 
-      if (!prevMessages.some((msg) => msg.id === newMessage.id)) {
-        return [...prevMessages, newMessage];
-      }
-      return prevMessages}
-      
-    )
-    
-    // setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
-  }
+  
    
   
 
@@ -73,10 +62,12 @@ const Chats = ({setnewMessage}) => {
 
     socket.on('newMessage',(message)=>{
 
-      
-      
-      receiveMessage(message)
-      console.log(`new message received: ${message}`)
+      const receiveMessage = (message) => {
+        const newMessage = { text: message, isSent: false };
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      }
+      receiveMessage(message);
+      // console.log(`new message received: ${message}`)
     })
 
     socket.on('disconnect', () => {
