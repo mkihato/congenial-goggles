@@ -22,7 +22,7 @@ const verifyWebhook= (req, res) => {
   if (mode === 'subscribe' && token === VERIFY_TOKEN) {
     // Respond with 200 OK and challenge token from the request
     res.status(200).send(challenge);
-    console.log('Webhook verified successfully!');
+    console.log('FB Webhook verified successfully!');
     
   } else {
     // Respond with '403 Forbidden' if verify tokens do not match
