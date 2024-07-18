@@ -52,6 +52,8 @@ app.post('/sendMessage',async(req,res)=>{
 }) 
 ////////socket handler /////////////////////////////////
 
+
+
 io.on('connection', (socket) => {
     console.log('New client-server connected');
   
@@ -59,6 +61,10 @@ io.on('connection', (socket) => {
       console.log('Client-server disconnected');
     });
   });
+
+
+
+  app.set('socketio', io);
 ////////////////////////////////////////////////////////////////////////////////////
 
 app.get('/',async(req,res)=>{

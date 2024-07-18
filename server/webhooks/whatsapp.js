@@ -48,7 +48,12 @@ const receiveMessage= async (req, res) => {
         console.log(`Message from ${from}: ${text}`);
         // Emit the message to all connected clients
         const io = req.app.get('socketio');
-        io.emit('newMessage', { from, text });
+
+        if(io){
+          io.emit('newMessage', { from, text });
+        }else{
+          console.error('io not initialized')
+        }
         
     } catch (error) {
       console.error('Error sending reply:', error);
