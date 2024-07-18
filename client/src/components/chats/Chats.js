@@ -9,13 +9,11 @@ const SOCKET_URL=`https://api.telvoip.io`;
 const Chats = ({setnewMessage}) => {
   const [sendMessage, setsendMessage] = useState('');
 
-
-
   const [messages, setMessages] = useState([
     { text: 'Hello! How are you?', isSent: false },
     { text: 'I am good, thank you!', isSent: true },
   ]);
-
+  
   
   const handleInputChange = (e) => {
     setsendMessage(e.target.value);
@@ -26,14 +24,14 @@ const Chats = ({setnewMessage}) => {
    
     
     if (sendMessage.trim() !== '') {
-      const newMessage = { text: sendMessage, isSent: true };
+      const newMessage = { text: sendMessage, isSent: true,id: Date.now() };
       setMessages([...messages, newMessage]);
       setsendMessage(''); // Clear the input field
       
 
     try {
       await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
-      
+      socket.emit('sent_message', newMessage);
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -41,18 +39,28 @@ const Chats = ({setnewMessage}) => {
     
   }
   };
+
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSendMessage();
     }
   };
-  const receiveMessage = async(receivedMessage) => {
 
-    
-    setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
+  const receiveMessage = (message) => {
+    const newMessage = { text: message, isSent: false, id: message.id };
+    setMessages((prevMessages) =>{ 
+      if (!prevMessages.some((msg) => msg.id === newMessage.id)) {
+        return [...prevMessages, newMessage];
+      }
+      return prevMessages}
       
+    )
+    
+    // setMessages(prevMessages => [...prevMessages, { text: receivedMessage, isSent: false }]);
+  }
    
-  };
+  
 
   // Simulate receiving messages for demonstration purposes
   useEffect(() => {
@@ -64,8 +72,10 @@ const Chats = ({setnewMessage}) => {
     })
 
     socket.on('newMessage',(message)=>{
-      receiveMessage(message)
 
+      
+      
+      receiveMessage(message)
       console.log(`new message received: ${message}`)
     })
 

@@ -40,7 +40,7 @@ app.post('/sendMessage',async(req,res)=>{
    try {
     const {sendMessage}= req.body
     console.log('received',sendMessage)
-    io.emit('newMessage',sendMessage)
+    // io.emit('newMessage',sendMessage)
 
 
     await whatsappService.sendMessage(sendMessage)
@@ -56,6 +56,11 @@ app.post('/sendMessage',async(req,res)=>{
 
 io.on('connection', (socket) => {
     console.log('New client-server connected');
+
+    socket.on('sent_message', (message) => {
+      console.log('Message sent by client:', message);
+      // Do not broadcast this message back to the client
+    });
   
     socket.on('disconnect', () => {
       console.log('Client-server disconnected');
