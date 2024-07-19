@@ -33,6 +33,8 @@ const verifyWebhook= (req, res) => {
 // Webhook to handle incoming messages
 const receiveMessage= async (req, res) => {
   let body= req.body;
+  console.log(body)
+
   
   if(body.object === 'page'){
     // Iterates over each entry - there may be multiple if batched

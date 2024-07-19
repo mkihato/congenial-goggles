@@ -1,10 +1,13 @@
 const express= require('express');
 const app= express();
 const http= require('http');
+const bodyParser= require("body-parser");
 const socketIo= require('socket.io');
+//middleware to read texts
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const server= http.createServer(app);
 const cors= require('cors');
-const bodyParser= require("body-parser");
 const gmailService=require('./gmailService');
 const WHfacebook=require('./webhooks/messengerFB')
 const whatsappService= require('./whatsappService')
@@ -30,9 +33,6 @@ process.on('uncaughtException', (err) => {
 
 
 
-//middleware to read texts
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 
 //////////////////////////////////////////////////////////////////////////////////////
