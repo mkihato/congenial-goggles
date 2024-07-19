@@ -34,8 +34,7 @@ function App() {
     <BrowserRouter>
     <div className="App">
       <div className="container">
-      
-
+     
       <nav className="nav">
       
       <NavLink to="/"><HomeIcon/></NavLink>
@@ -46,7 +45,6 @@ function App() {
       
       </nav>
 
-      
       <div className="main-content">
 
         <Routes>

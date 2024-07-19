@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "../App.css"
 import Chats from "../components/chats/Chats"
 import NavItem from "../components/navitem/NavItem";
-import MessageInbox from "../components/messageinbox/MessageInbox";
+import MessageInbox from '../components/messageinbox/MessageInbox';
 
 
 
