@@ -11,9 +11,9 @@ import axios from 'axios';
 const ChatBox = ({setnewMessage}) => {
     const [to, setTo] = useState('');
     const [subject, setSubject] = useState('');
-    // const [text, setText] = useState('');
+    const [text, setText] = useState('');
   
-  const [sendMessage, setsendMessage] = useState('');
+  // const [sendMessage, setsendMessage] = useState('');
 
   // const [messages, setMessages] = useState([
   //   { text: 'Hello! How are you?', isSent: false },
@@ -23,12 +23,12 @@ const ChatBox = ({setnewMessage}) => {
    
 
   const handleInputChange = (e) => {
-    setsendMessage(e.target.value);
+    setText(e.target.value);
     
   };
 
   const handleSendMessage = async() => {
-    if (!to || !subject || !sendMessage) {
+    if (!to || !subject || !text) {
       alert('All fields are required');
       return;
   }
@@ -37,25 +37,16 @@ const ChatBox = ({setnewMessage}) => {
       await axios.post('https://api.telvoip.io/send-email', {
           to,
           subject,
-          sendMessage
+          text
       });
       console.log('Email sent successfully');
       setTo('');
       setSubject('');
-      setsendMessage('');
+      setText('');
   } catch (error) {
       console.error('Error sending email:', error);
       alert('Failed to send email');
   }
-
-    // try {
-    //   await axios.post('https://api.telvoip.io/sendMessage',{sendMessage});
-    //   setsendMessage('')
-    //   setMessages([...messages, { text: sendMessage, isSent: true }]);
-
-    // } catch (error) {
-    //   console.error('Error sending message:', error);
-    // }
 
   };
   const handleKeyPress = (e) => {
@@ -91,7 +82,7 @@ const ChatBox = ({setnewMessage}) => {
           type="text"
           placeholder="Type a message..."
           onKeyDown={handleKeyPress}
-          value={sendMessage}
+          value={text}
           onChange={handleInputChange}
           className="message-input"
         />
