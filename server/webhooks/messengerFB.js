@@ -99,49 +99,61 @@ const receiveMessage= async (req, res) => {
   
 };
 
-function handleMessage(senderPsid, receivedMessage) {
-  let response;
+function handleMessage (senderPsid, receivedMessage) {
+  // let response;
+
 
   // Checks if the message contains text
-  if (receivedMessage.text) {
-    // Create the payload for a basic text message, which
-    // will be added to the body of your request to the Send API
-    response = {
-      'text': `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`
-    };
-  } else if (receivedMessage.attachments) {
+  // if (receivedMessage.text) {
+  //   // Create the payload for a basic text message, which
+  //   // will be added to the body of your request to the Send API
+  //   response = {
+  //     'text': `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`
+  //   };
+  // } else if (receivedMessage.attachments) {
 
-    // Get the URL of the message attachment
-    let attachmentUrl = receivedMessage.attachments[0].payload.url;
-    response = {
-      'attachment': {
-        'type': 'template',
-        'payload': {
-          'template_type': 'generic',
-          'elements': [{
-            'title': 'Is this the right picture?',
-            'subtitle': 'Tap a button to answer.',
-            'image_url': attachmentUrl,
-            'buttons': [
-              {
-                'type': 'postback',
-                'title': 'Yes!',
-                'payload': 'yes',
-              },
-              {
-                'type': 'postback',
-                'title': 'No!',
-                'payload': 'no',
-              }
-            ],
-          }]
-        }
-      }
-    };
+  //   // Get the URL of the message attachment
+  //   let attachmentUrl = receivedMessage.attachments[0].payload.url;
+  //   response = {
+  //     'attachment': {
+  //       'type': 'template',
+  //       'payload': {
+  //         'template_type': 'generic',
+  //         'elements': [{
+  //           'title': 'Is this the right picture?',
+  //           'subtitle': 'Tap a button to answer.',
+  //           'image_url': attachmentUrl,
+  //           'buttons': [
+  //             {
+  //               'type': 'postback',
+  //               'title': 'Yes!',
+  //               'payload': 'yes',
+  //             },
+  //             {
+  //               'type': 'postback',
+  //               'title': 'No!',
+  //               'payload': 'no',
+  //             }
+  //           ],
+  //         }]
+  //       }
+  //     }
+  //   };
+  // }
+  if(receivedMessage.text){
+    const text= receivedMessage.text
+    try {
+      
+     callSendAPI(senderPsid, `you said: ${text},right?`);
+    } catch (error) {
+      console.error(error.response)
+    }
+  }else{
+
   }
 
   // Send the response message
-  callSendAPI(senderPsid, response);
+  
 }
 
 // Handles messaging_postbacks events
@@ -162,7 +174,7 @@ function handlePostback(senderPsid, receivedPostback) {
 }
 
 // Sends response messages via the Send API
-function callSendAPI(senderPsid, response) {
+const callSendAPI=async (senderPsid, response)=>{
 
   // The page access token we have generated in your app settings
   
@@ -174,20 +186,29 @@ function callSendAPI(senderPsid, response) {
     },
     'message': response
   };
-
+  try {
+    await axios({
+      method: 'POST',
+      url: `https://graph.facebook.com/v20.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
+      data: requestBody,
+    });
+    console.log('Message sent successfully');
+  } catch (error) {
+    console.error('Error sending message:', error.response.data);
+  }
   // Send the HTTP request to the Messenger Platform
-  request({
-    'uri': 'https://graph.facebook.com/v2.6/me/messages',
-    'qs': { 'access_token': PAGE_ACCESS_TOKEN },
-    'method': 'POST',
-    'json': requestBody
-  }, (err, _res, _body) => {
-    if (!err) {
-      console.log('Message sent!');
-    } else {
-      console.error('Unable to send message:' + err);
-    }
-  });
+  // request({
+  //   'uri': 'https://graph.facebook.com/v20.0/me/messages',
+  //   'qs': { 'access_token': PAGE_ACCESS_TOKEN },
+  //   'method': 'POST',
+  //   'json': requestBody
+  // }, (err, _res, _body) => {
+  //   if (!err) {
+  //     console.log('Message sent!');
+  //   } else {
+  //     console.error('Unable to send message:' + err);
+  //   }
+  // });
 }
 
 
