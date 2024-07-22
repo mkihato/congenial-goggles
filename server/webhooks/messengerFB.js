@@ -100,7 +100,7 @@ const receiveMessage= async (req, res) => {
 };
 
 function handleMessage (senderPsid, receivedMessage) {
-  // let response;
+  let response;
 
 
   // Checks if the message contains text
@@ -141,10 +141,12 @@ function handleMessage (senderPsid, receivedMessage) {
   //   };
   // }
   if(receivedMessage.text){
-    const text= receivedMessage.text
+    response = {
+          'text': `You sent the message: '${receivedMessage.text}'. Now send me an attachment!`
+        };
     try {
       
-     callSendAPI(senderPsid, `you said: ${text},right?`);
+     callSendAPI(senderPsid, response);
     } catch (error) {
       console.error(error.response)
     }
