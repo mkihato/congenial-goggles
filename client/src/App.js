@@ -42,7 +42,6 @@ function App() {
       <NavLink to="Multimessages"><MessageIcon/></NavLink>
       <NavLink to="Ticket"><EmailSharpIcon/></NavLink>
       <NavLink to="Analysis"><AssessmentIcon/></NavLink>
-      
       </nav>
 
       <div className="main-content">
