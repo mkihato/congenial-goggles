@@ -160,7 +160,8 @@ function handleMessage (senderPsid, receivedMessage) {
 
 // Handles messaging_postbacks events
 function handlePostback(senderPsid, receivedPostback) {
-  let response;
+ 
+  // let response;
 
   // Get the payload for the postback
   let payload = receivedPostback.payload;

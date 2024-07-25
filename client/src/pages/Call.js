@@ -8,14 +8,15 @@ const Call=()=>{
     return(
     <div className='main-content'>
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="default" >
         <Toolbar>
         <SearchIcon />
           <TextField
             variant="outlined"
             placeholder="SEARCH"
             size="small"
-            sx={{ flexGrow: 1, marginRight: 2,width:60 }}
+            sx={{ flexGrow: 1, marginRight: 2 }}
+            style={{maxWidth:'60%'}}
           />
           <Button variant="contained" color="primary">
             ACTIVE
